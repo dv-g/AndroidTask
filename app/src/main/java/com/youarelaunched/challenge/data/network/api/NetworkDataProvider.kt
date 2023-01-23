@@ -15,7 +15,7 @@ class NetworkDataProvider @Inject constructor(
     @ApplicationContext private val appContext: Context
 ) : ApiVendors {
 
-    override suspend fun getVendors(): List<NetworkVendor> = withContext(workDispatcher) {
+    override suspend fun getVendors(companyName : String): List<NetworkVendor> = withContext(workDispatcher) {
         val json = appContext.assets
             .open("vendors.json")
             .bufferedReader()
@@ -26,10 +26,9 @@ class NetworkDataProvider @Inject constructor(
             Gson()
                 .fromJson(json, NetworkVendorsData::class.java)
                 .vendors
-        if (true) {
-            result = result.filter { it.companyName.contains("a") }
+        if (companyName.isNotEmpty()) {
+            result = result.filter { it.companyName.contains(companyName) }
         }
         result
     }
-
 }

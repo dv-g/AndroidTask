@@ -24,17 +24,16 @@ class VendorsVM @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
-        getVendors()
+        getVendors("")
     }
 
-    fun getVendors() {
+    fun getVendors(companyName : String) {
         viewModelScope.launch {
             _uiState.update {
                 it.copy(
-                    vendors = repository.getVendors()
+                    vendors = repository.getVendors(companyName)
                 )
             }
         }
     }
-
 }

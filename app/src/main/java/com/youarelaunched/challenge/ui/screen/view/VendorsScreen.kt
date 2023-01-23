@@ -10,6 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.youarelaunched.challenge.middle.R
 import com.youarelaunched.challenge.ui.screen.state.VendorsScreenUiState
 import com.youarelaunched.challenge.ui.screen.view.components.*
@@ -26,7 +27,8 @@ fun VendorsRoute(
 
 @Composable
 fun VendorsScreen(
-    uiState: VendorsScreenUiState
+    uiState: VendorsScreenUiState,
+    viewModel: VendorsVM = viewModel()
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -44,6 +46,7 @@ fun VendorsScreen(
                     .padding(16.dp, 24.dp, 16.dp, 0.dp),
                 stringResource(R.string.search)
             )
+            { viewModel.getVendors(it) }
             if (!uiState.vendors.isNullOrEmpty()) {
                 LazyColumn(
                     modifier = Modifier

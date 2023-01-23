@@ -8,6 +8,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.youarelaunched.challenge.ui.theme.VendorAppTheme
 
@@ -26,6 +27,7 @@ fun MessageListIsEmpty(title: String, description: String) {
             text = title,
             color = VendorAppTheme.colors.textTitle,
             style = VendorAppTheme.typography.h5,
+            textAlign = TextAlign.Center
         )
         Text(
             modifier = Modifier
@@ -33,6 +35,7 @@ fun MessageListIsEmpty(title: String, description: String) {
             text = description,
             color = VendorAppTheme.colors.textDescription,
             style = VendorAppTheme.typography.body1,
+            textAlign = TextAlign.Center
         )
     }
 }
