@@ -22,10 +22,14 @@ class NetworkDataProvider @Inject constructor(
             .use {
                 it.readText()
             }
-
-        Gson()
-            .fromJson(json, NetworkVendorsData::class.java)
-            .vendors
+        var result =
+            Gson()
+                .fromJson(json, NetworkVendorsData::class.java)
+                .vendors
+        if (true) {
+            result = result.filter { it.companyName.contains("a") }
+        }
+        result
     }
 
 }
