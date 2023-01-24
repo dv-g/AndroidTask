@@ -27,7 +27,7 @@ class NetworkDataProvider @Inject constructor(
                 .fromJson(json, NetworkVendorsData::class.java)
                 .vendors
         if (companyName.isNotEmpty()) {
-            result = result.filter { it.companyName.contains(companyName) }
+            result = result.filter { it.companyName.contains(companyName, ignoreCase = true) }
         }
         result
     }

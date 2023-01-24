@@ -5,12 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.youarelaunched.challenge.data.repository.VendorsRepository
 import com.youarelaunched.challenge.ui.screen.state.VendorsScreenUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@OptIn(FlowPreview::class)
 @HiltViewModel
 class VendorsVM @Inject constructor(
     private val repository: VendorsRepository
@@ -23,8 +23,29 @@ class VendorsVM @Inject constructor(
     )
     val uiState = _uiState.asStateFlow()
 
+    private val _searchFlow = MutableStateFlow("")
+    private val searchFlow = _searchFlow.asStateFlow()
+
+    fun updateSearch(name: String) {
+        _searchFlow.value = name
+    }
+
     init {
         getVendors("")
+
+        viewModelScope.launch {
+            val dropFirstTypedSymbols = 2
+            val timeMilliSecondsDebouncing = 500L
+            val mimSymbols = 3
+            searchFlow
+                .drop(dropFirstTypedSymbols)
+                .debounce(timeMilliSecondsDebouncing)
+                .collect { query ->
+                    if (query.length >= mimSymbols) {
+                        getVendors(query)
+                    }
+                }
+        }
     }
 
     fun getVendors(companyName : String) {

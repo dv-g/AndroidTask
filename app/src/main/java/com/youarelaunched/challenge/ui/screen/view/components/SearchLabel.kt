@@ -22,6 +22,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.youarelaunched.challenge.middle.R
+import com.youarelaunched.challenge.ui.screen.view.VendorsVM
 import com.youarelaunched.challenge.ui.theme.VendorAppTheme
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -29,7 +30,8 @@ import com.youarelaunched.challenge.ui.theme.VendorAppTheme
 fun SearchLabel(
     modifier: Modifier = Modifier,
     hint: String = "",
-    onSearch: (String) -> Unit
+    viewModel: VendorsVM,
+    onSearch: (String) -> Unit,
 ) {
     var value by remember {
         mutableStateOf("")
@@ -40,6 +42,7 @@ fun SearchLabel(
         value = value,
         onValueChange = { newText ->
             value = newText
+            viewModel.updateSearch(newText)
         },
         textStyle = TextStyle(
             fontSize = VendorAppTheme.typography.body1.fontSize,

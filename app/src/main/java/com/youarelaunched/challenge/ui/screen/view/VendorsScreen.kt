@@ -44,9 +44,10 @@ fun VendorsScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp, 24.dp, 16.dp, 0.dp),
-                stringResource(R.string.search)
+                stringResource(R.string.search),
+                viewModel,
+                { viewModel.getVendors(it) }
             )
-            { viewModel.getVendors(it) }
             if (!uiState.vendors.isNullOrEmpty()) {
                 LazyColumn(
                     modifier = Modifier
