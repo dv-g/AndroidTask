@@ -36,14 +36,11 @@ class VendorsVM @Inject constructor(
         viewModelScope.launch {
             val dropFirstTypedSymbols = 2
             val timeMilliSecondsDebouncing = 500L
-            val mimSymbols = 3
             searchFlow
                 .drop(dropFirstTypedSymbols)
                 .debounce(timeMilliSecondsDebouncing)
                 .collect { query ->
-                    if (query.length >= mimSymbols) {
-                        getVendors(query)
-                    }
+                    getVendors(query)
                 }
         }
     }
